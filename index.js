@@ -31,9 +31,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// app.use("/",(req,res)=>{
-//     res.send("welcome to api");
-// });
+app.get("/",(req,res)=>{
+    res.send("welcome to api");
+});
 
 app.use((req,res,next)=>{
     console.log("request Cookies", req.cookies);

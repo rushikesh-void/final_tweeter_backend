@@ -23,32 +23,31 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// CORS setup
+// ✅ CORS setup
 const allowedOrigins = [
   'http://localhost:3000',
   'https://serene-daffodil-5eaf62.netlify.app',
-  'https://cozy-medovik-9166c3.netlify.app' // ✅ You missed 'https://' before
+  'https://cozy-medovik-9166c3.netlify.app'
 ];
 
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true // Required if you're using cookies/sessions
-}));
+  credentials: true
+};
 
-// Optional: Handle preflight requests for all routes
-app.options('*', cors());
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // ✅ Use same options for preflight
 
-// Debugging middleware (optional)
+// Optional: Logging middleware for debugging
 app.use((req, res, next) => {
+  console.log("Request Origin:", req.headers.origin);
   console.log("Request Cookies:", req.cookies);
-  console.log("Request Headers:", req.headers.origin);
   next();
 });
 

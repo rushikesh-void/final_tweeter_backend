@@ -87,7 +87,8 @@ app.use(cookieParser());
 
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://serene-daffodil-5eaf62.netlify.app'
+  'https://serene-daffodil-5eaf62.netlify.app',
+  "cozy-medovik-9166c3.netlify.app"
  
 ];
 
@@ -101,7 +102,7 @@ app.use(cors({
     },
     credentials: true
   }));
-  
+
 // app.use(cors(corsOptions));
 
 app.get("/",(req,res)=>{

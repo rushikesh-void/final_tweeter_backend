@@ -11,21 +11,15 @@ dotenv.config();
 
 const app = express();
 
-/* ======================
-   CONNECT DATABASE
-====================== */
+// CONNECT DATABASE 
 databaseConnection();
 
-/* ======================
-   MIDDLEWARE (ORDER MATTERS)
-====================== */
+// MIDDLEWARE 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-/* ======================
-   CORS (FINAL + SAFE)
-====================== */
+// CORS 
 app.use(
   cors({
     origin: [
@@ -37,13 +31,7 @@ app.use(
   })
 );
 
-/* ❌ REMOVE THIS LINE (VERY IMPORTANT)
-   app.options("*", cors());
-*/
-
-/* ======================
-   ROUTES
-====================== */
+ // ROUTES
 app.get("/", (req, res) => {
   res.send("API is running 🚀");
 });
@@ -51,9 +39,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/tweet", tweetRoute);
 
-/* ======================
-   START SERVER
-====================== */
+// START SERVER
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);

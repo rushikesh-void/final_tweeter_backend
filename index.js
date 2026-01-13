@@ -17,24 +17,29 @@ const app = express();
 databaseConnection();
 
 /* ======================
-   CORS (FINAL FIX)
-====================== */
-app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://grand-biscuit-d27c7b.netlify.app"
-  ],
-  credentials: true
-}));
-
-app.options("*", cors());
-
-/* ======================
-   MIDDLEWARE
+   MIDDLEWARE (ORDER MATTERS)
 ====================== */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+/* ======================
+   CORS (FINAL + SAFE)
+====================== */
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://grand-biscuit-d27c7b.netlify.app"
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  })
+);
+
+/* ❌ REMOVE THIS LINE (VERY IMPORTANT)
+   app.options("*", cors());
+*/
 
 /* ======================
    ROUTES
